@@ -4,10 +4,6 @@ pluginManagement {
             name = 'Quilt'
             url = 'https://maven.quiltmc.org/repository/release'
         }
-        maven {
-            name = 'Quilt Snapshot'
-            url = 'https://maven.quiltmc.org/repository/snapshot'
-        }
 		// Currently needed for Intermediary and other temporary dependencies
         maven {
             name = 'Fabric'

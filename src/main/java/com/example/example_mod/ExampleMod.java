@@ -13,6 +13,6 @@ public class ExampleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize(ModContainer mod) {
-		LOGGER.info("Hello Quilted world!");
+		LOGGER.info("Hello Quilt world from Example Mod v{}!", mod.metadata().version().raw());
 	}
 }
