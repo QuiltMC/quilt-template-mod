@@ -1,7 +1,7 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "${group}",
+		"group": "com.example",
 		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
@@ -10,7 +10,6 @@
 			"contributors": {
 				"Me!": "Owner"
 			},
-			"license": "ARR",
 			"icon": "assets/example_mod/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",

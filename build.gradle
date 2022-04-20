@@ -32,13 +32,9 @@ dependencies {
 
 processResources {
 	inputs.property "version", version
-	inputs.property "group", group
 
 	filesMatching('quilt.mod.json') {
-		expand(
-			"version": version,
-			"group": group
-		)
+		expand "version": version
 	}
 }
 
