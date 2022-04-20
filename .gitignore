@@ -23,5 +23,5 @@ bin/
 .classpath
 .project
 
-# MacOS
+# macOS
 *.DS_Store
