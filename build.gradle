@@ -1,0 +1,76 @@
+plugins {
+	id 'org.quiltmc.loom' version '0.12-SNAPSHOT'
+	id 'maven-publish'
+}
+
+group = maven_group
+version = project.version
+archivesBaseName = archives_base_name
+
+repositories {
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:$minecraft_version"
+	mappings( loom.layered {
+		addLayer quiltMappings.mappings( "org.quiltmc:quilt-mappings:$minecraft_version+build.$quilt_mappings:v2" )
+//		addLayer loom.officialMojangMappings() // uncomment if you want mojmap too
+	})
+	modImplementation "org.quiltmc:quilt-loader:$loader_version"
+
+	modImplementation "org.quiltmc:qsl:$qsl_version"
+
+	// QSL is not a complete API; you need Quilted Fabric API to fill in the gaps.
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:$quilted_fapi_version-$minecraft_version"
+}
+
+processResources {
+	inputs.property 'version', version
+	inputs.property 'maven_group', maven_group
+	inputs.property 'loader_version', loader_version
+	inputs.property 'minecraft_version', minecraft_version
+
+	filesMatching('quilt.mod.json') {
+		expand([
+			'version': version,
+			'maven_group': maven_group,
+			'loader_version': loader_version,
+			'minecraft_version': minecraft_version,
+			'quilted_fabric_api_version': quilted_fapi_version
+		])
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.sourceCompatibility = 17 // for the IDE support
+	it.options.encoding = 'UTF-8'
+	it.options.release.set(17)
+}
+
+java {
+	// if this mod is gonna be a library, its better to generate javadocs too, uncomment this line to generate them
+	//withJavadocJar()
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+}
+
+jar {
+	from('LICENSE') {
+		rename { "$it_$archivesBaseName"}
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			group 'com.examplemod'
+			from components.java
+		}
+	}
+
+	repositories {
+		 mavenLocal()
+	}
+}
