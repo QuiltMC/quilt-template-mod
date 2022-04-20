@@ -9,11 +9,6 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
-		// Temporarily required until we update Loom Quiltflower
-		maven {
-            name = 'Cotton'
-            url = 'https://server.bbkr.space/artifactory/libs-release/'
-        }
         gradlePluginPortal()
     }
 }
