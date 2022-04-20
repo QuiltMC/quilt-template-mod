@@ -2,7 +2,9 @@
 
 The official Quilt example mod. You can use it as a template for you own mods!
 
-## To use this template
+## Usage
+
+In order to use this mod as a template:
 
 1. Create a new repository from this template with `Use this Template`
 2. Clone the recently-created repo on your PC
