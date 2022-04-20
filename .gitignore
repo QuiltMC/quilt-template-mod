@@ -1,4 +1,27 @@
-.idea
-.gradle
-build
-run
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# Quilt Loom
+run/
+
+# Eclipse
+*.launch
+
+# IntelliJ Idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# MacOS
+*.DS_Store

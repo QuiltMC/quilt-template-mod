@@ -1,8 +1,8 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "${maven_group}",
-		"id": "examplemod",
+		"group": "${group}",
+		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
 			"name": "Mod Name",
@@ -10,33 +10,27 @@
 			"contributors": {
 				"Me!": "Owner"
 			},
-			"icon": "assets/examplemod/icon.png"
+			"license": "ARR",
+			"icon": "assets/example_mod/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": [
-				"com.examplemod.ExampleMod"
-			]
+			"init": "com.example.example_mod.ExampleMod"
 		},
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"versions": ">=${loader_version}"
+				"versions": ">=0.16.0-"
 			},
 			{
 				"id": "quilted_fabric_api",
-				"versions": "${quilted_fabric_api_version}"
+				"versions": ">=1.0.0-"
 			},
 			{
 				"id": "minecraft",
-				"versions": ">=${minecraft_version}"
+				"versions": ">=1.18.2"
 			}
 		]
 	},
-	"mixin": [
-		"examplemod.mixins.json"
-	],
-	"minecraft": {
-		"environment": "*"
-	}
+	"mixin": "example_mod.mixins.json"
 }
