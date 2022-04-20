@@ -1,76 +1,83 @@
 plugins {
-	id 'org.quiltmc.loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
+	alias(libs.plugins.quilt.loom)
 }
 
-group = maven_group
+archivesBaseName = project.archives_base_name
 version = project.version
-archivesBaseName = archives_base_name
+group = project.maven_group
 
 repositories {
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
 }
 
+// All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
+// See https://docs.gradle.org/current/userguide/platforms.html for information on how version catalogs work.
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:$minecraft_version"
-	mappings( loom.layered {
-		addLayer quiltMappings.mappings( "org.quiltmc:quilt-mappings:$minecraft_version+build.$quilt_mappings:v2" )
-//		addLayer loom.officialMojangMappings() // uncomment if you want mojmap too
-	})
-	modImplementation "org.quiltmc:quilt-loader:$loader_version"
+	minecraft libs.minecraft
+	mappings loom.layered {
+		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
+		// officialMojangMappings() // Uncomment if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
+	}
+	modImplementation libs.quilt.loader
 
-	modImplementation "org.quiltmc:qsl:$qsl_version"
-
-	// QSL is not a complete API; you need Quilted Fabric API to fill in the gaps.
-	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:$quilted_fapi_version-$minecraft_version"
+	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
+	// Quilted Fabric API will automatically pull in the correct QSL version.
+	modImplementation libs.quilted.fabric.api
 }
 
 processResources {
-	inputs.property 'version', version
-	inputs.property 'maven_group', maven_group
-	inputs.property 'loader_version', loader_version
-	inputs.property 'minecraft_version', minecraft_version
+	inputs.property "version", version
 
 	filesMatching('quilt.mod.json') {
-		expand([
-			'version': version,
-			'maven_group': maven_group,
-			'loader_version': loader_version,
-			'minecraft_version': minecraft_version,
-			'quilted_fabric_api_version': quilted_fapi_version
-		])
+		expand "version": version
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.sourceCompatibility = 17 // for the IDE support
-	it.options.encoding = 'UTF-8'
-	it.options.release.set(17)
+	it.options.encoding = "UTF-8"
+	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+	it.options.release = 17
 }
 
 java {
-	// if this mod is gonna be a library, its better to generate javadocs too, uncomment this line to generate them
-	//withJavadocJar()
+	// Still required by IDEs such as Eclipse and Visual Studio Code
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+
+	// If this mod is going to be a library, then it should also generate Javadocs in order to aid with developement.
+	// Uncomment this line to generate them.
+	// withJavadocJar()
 }
 
+// If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-	from('LICENSE') {
-		rename { "$it_$archivesBaseName"}
+	from("LICENSE") {
+		rename { "${it}_${archivesBaseName}" }
 	}
 }
 
+// Configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			group 'com.examplemod'
 			from components.java
 		}
 	}
 
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		 mavenLocal()
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
 	}
 }
