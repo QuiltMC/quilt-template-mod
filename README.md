@@ -1,6 +1,6 @@
-# Quilt Example Mod
+# Quilt Template Mod
 
-The official Quilt example mod. You can use it as a template for your own mods!
+The official Quilt Template Mod. You can use it as a template for your own mods!
 
 ## Usage
 
