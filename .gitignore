@@ -23,5 +23,8 @@ bin/
 .classpath
 .project
 
+# Eclipse JDT LS
+workspace/
+
 # macOS
 *.DS_Store
