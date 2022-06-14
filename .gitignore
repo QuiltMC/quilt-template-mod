@@ -23,5 +23,8 @@ bin/
 .classpath
 .project
 
+# LSP
+workspace/
+
 # macOS
 *.DS_Store
