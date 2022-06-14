@@ -23,7 +23,7 @@ bin/
 .classpath
 .project
 
-# LSP
+# Eclipse JDT LS
 workspace/
 
 # macOS
