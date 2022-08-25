@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin {
 	@Inject(method = "init", at = @At("TAIL"))
-	public void onInit(CallbackInfo ci) {
+	public void exampleMod$onInit(CallbackInfo ci) {
 		ExampleMod.LOGGER.info("This line is printed by an example mod mixin!");
 	}
 }
