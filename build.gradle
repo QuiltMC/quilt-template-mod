@@ -19,7 +19,7 @@ repositories {
 // See https://docs.gradle.org/current/userguide/platforms.html for information on how version catalogs work.
 dependencies {
 	minecraft libs.minecraft
-	mappings variantOf(libs.quilt.mappings) { classifier "intermediary-v2" }
+	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
 	// Replace the above line with the block below if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
 	/*
 	mappings loom.layered {
@@ -36,7 +36,7 @@ dependencies {
 }
 
 processResources {
-	inputs.property "version", version
+	inputs.property 'version', version
 
 	filesMatching('quilt.mod.json') {
 		expand "version": version
@@ -44,7 +44,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
+	it.options.encoding = 'UTF-8'
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	it.options.release = 17
 }
@@ -65,7 +65,7 @@ java {
 
 // If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-	from("LICENSE") {
+	from('LICENSE') {
 		rename { "${it}_${archivesBaseName}" }
 	}
 }
