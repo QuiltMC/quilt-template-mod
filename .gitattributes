@@ -1,5 +1,7 @@
 *.java          text    eol=lf  diff=java
 *.gradle        text    eol=lf  diff=java
+*.kt            text    eol=lf  diff=kotlin
+*.kts           text    eol=lf  diff=kotlin
 gradlew         text    eol=lf
 *.bat           text    eol=crlf
 
