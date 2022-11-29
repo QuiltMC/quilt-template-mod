@@ -4,7 +4,7 @@ My personalized Quilt template Mod. You can use it as a template for your own mo
 
 ## Differences from the Official Mod
 - Added a build github action
-- Added gametest support (See [Gametest Support](./README.md#Gametest Support))
+- Added gametest support (See [Gametest Support]("./README.md#Gametest Support"))
 ## Usage
 
 In order to use this mod as a template:
