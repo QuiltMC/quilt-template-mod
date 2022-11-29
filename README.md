@@ -1,6 +1,9 @@
 # Quilt Template Mod
 
-The official Quilt template Mod. You can use it as a template for your own mods!
+My personalized Quilt template Mod. You can use it as a template for your own mods!
+
+## Differences from the Official Mod
+- Added a build github action
 
 ## Usage
 
