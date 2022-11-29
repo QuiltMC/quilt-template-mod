@@ -1,0 +1,40 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "com.example",
+		"id": "example_mod_test",
+		"version": "${version}",
+		"metadata": {
+			"name": "Mod Name Testmod",
+			"description": "The Mod Name Testmod.",
+			"contributors": {
+				"Your name here": "Owner"
+			},
+			"icon": "assets/example_mod/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"fabric-gametest": [
+				"com.example.example_mod.test.ExampleModTests"
+			]
+		},
+		"depends": [
+			{
+				"id": "example_mod",
+				"versions": "*"
+			},
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.17.0-"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=4.0.0-"
+			},
+			{
+				"id": "minecraft",
+				"versions": ">=1.19.2"
+			}
+		]
+	}
+}
