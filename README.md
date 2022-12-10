@@ -1,6 +1,6 @@
 # Quilt Template Mod
 
-The official Quilt template Mod. You can use it as a template for your own mods!
+The official Quilt template mod. You can use it as a template for your own mods!
 
 ## Usage
 
