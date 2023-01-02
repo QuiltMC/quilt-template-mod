@@ -63,9 +63,10 @@ java {
 	// withJavadocJar()
 }
 
+// If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-	filesMatching('LICENSE') {
-		rename '^(LICENSE.*?)(\\..*)?$', "\$1_${archivesBaseName}\$2"
+	from('LICENSE') {
+		rename { "${it}_${archivesBaseName}" }
 	}
 }
 
