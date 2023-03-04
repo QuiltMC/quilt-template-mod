@@ -1,7 +1,7 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "com.example",
+		"group": "${group}",
 		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
