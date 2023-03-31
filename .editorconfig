@@ -7,6 +7,9 @@ insert_final_newline = true
 tab_width = 4
 trim_trailing_whitespace = true
 
+[*.md]
+trim_trailing_whitespace = false
+
 [*.gradle]
 indent_style = tab
 
@@ -28,7 +31,3 @@ tab_width = 2
 [*.properties]
 indent_style = space
 indent_size = 2
-
-[.editorconfig]
-indent_style = space
-indent_size = 4
