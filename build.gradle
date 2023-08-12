@@ -3,7 +3,10 @@ plugins {
 	alias libs.plugins.quilt.loom
 }
 
-base.archivesName = project.archives_base_name
+base {
+	archivesName = project.archives_base_name
+}
+
 version = "$project.version+${libs.versions.minecraft.get()}"
 group = project.maven_group
 
