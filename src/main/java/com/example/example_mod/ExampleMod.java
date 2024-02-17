@@ -11,6 +11,9 @@ public class ExampleMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("Example Mod");
 
+	// A central place to house your mod ID.
+	public static final String MOD_ID = "example_mod";
+
 	@Override
 	public void onInitialize(ModContainer mod) {
 		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
