@@ -6,7 +6,7 @@ loom = "1.4.1"
 quilt_mappings = "1.20.2+build.3"
 quilt_loader = "0.23.1"
 
-quilted_fabric_api = "8.0.0-alpha.3+0.91.2-1.20.2"
+quilted_fabric_api = "8.0.0-alpha.4+0.91.6-1.20.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
