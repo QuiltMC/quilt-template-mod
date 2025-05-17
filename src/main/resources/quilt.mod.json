@@ -1,7 +1,7 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "com.example",
+		"group": "${group}",
 		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
@@ -24,15 +24,15 @@
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"versions": ">=0.18.3"
+				"versions": ">=0.28.0"
 			},
 			{
 				"id": "quilted_fabric_api",
-				"versions": ">=6.0.0-"
+				"versions": ">6.0.0-"
 			},
 			{
 				"id": "minecraft",
-				"versions": ">=1.19.4"
+				"versions": "=1.19.4"
 			}
 		]
 	},
