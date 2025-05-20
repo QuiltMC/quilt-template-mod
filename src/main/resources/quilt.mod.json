@@ -2,10 +2,10 @@
 	"schema_version": 1,
 	"quilt_loader": {
 		"group": "${group}",
-		"id": "example_mod",
+		"id": "${id}",
 		"version": "${version}",
 		"metadata": {
-			"name": "Mod Name",
+			"name": "Example Mod",
 			"description": "A short description of your mod.",
 			"contributors": {
 				"Your name here": "Owner"
@@ -19,20 +19,21 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "com.example.example_mod.ExampleMod"
+			"init": "${group}.${id}.ExampleMod",
+			"fabric-datagen": "${group}.${id}.ExampleModDataGenerator"
 		},
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"versions": ">=0.19.1"
+				"versions": ">=0.29-"
 			},
 			{
 				"id": "quilted_fabric_api",
-				"versions": ">=7.0.2"
+				"versions": ">=10.0.0-"
 			},
 			{
 				"id": "minecraft",
-				"versions": ">=1.20"
+				"versions": ">=1.20.6"
 			}
 		]
 	},

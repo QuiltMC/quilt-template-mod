@@ -7,8 +7,10 @@ base {
 	archivesName = project.archives_base_name
 }
 
-version = "$project.version+${libs.versions.minecraft.get()}"
+version = "$project.version+${libs.minecraft.get().version}"
 group = project.maven_group
+
+final dataGenerationDir = file("src/main/generated")
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -16,6 +18,14 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+}
+
+sourceSets {
+	"main" {
+		resources {
+			srcDirs(dataGenerationDir)
+		}
+	}
 }
 
 loom {
@@ -28,6 +38,24 @@ loom {
 			// If you shade (directly include classes, not JiJ) a dependency into your mod, include it here using one of these methods:
 			// dependency("com.example.shadowedmod:1.2.3")
 			// configuration("exampleShadedConfigurationName")
+		}
+	}
+
+	runs {
+		"dataGeneration" {
+			final buildDir = file("build/datagen")
+
+			configName = "Fabric Data Generation"
+			dataGenerationDir.mkdirs()
+			buildDir.mkdirs()
+
+			client()
+			source("main")
+			property("fabric-api.datagen")
+			property("fabric-api.datagen.strict-validation", "true")
+			property("fabric-api.datagen.output-dir", dataGenerationDir.absolutePath)
+
+			runDir("build/datagen")
 		}
 	}
 }
@@ -52,18 +80,60 @@ dependencies {
 	// modImplementation libs.bundles.quilted.fabric.api.deprecated // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 }
 
-processResources {
-	inputs.properties 'version': version, 'group': project.group
+final generateDataGenerationDir = "generateDataGenerationDir"
 
-	filesMatching('quilt.mod.json') {
-		expand 'version': version, 'group': project.group
+tasks {
+	processResources {
+		inputs.properties 'version': version, 'group': project.group
+
+		filesMatching('quilt.mod.json') {
+			expand 'version': version, 'group': project.group, 'id': archives_base_name
+		}
+
+		filesMatching('**/lang/*.json') {
+			expand 'id': archives_base_name
+		}
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		it.options.encoding = 'UTF-8'
+		// Minecraft 1.20.5 (24w14a) upwards uses Java 21.
+		it.options.release = 21
+	}
+
+	javadoc {
+		options.encoding = "UTF-8"
+	}
+
+	// Run `./gradlew wrapper --gradle-version <newVersion>` or `gradle wrapper --gradle-version <newVersion>` to update gradle scripts
+	// BIN distribution should be sufficient for the majority of mods
+	wrapper {
+		distributionType = Wrapper.DistributionType.BIN
+	}
+
+	// If you plan to use a different file for the license, don't forget to change the file name here!
+	jar {
+		from('LICENSE') {
+			rename { "${it}_${archives_base_name}" }
+		}
+	}
+
+
+	ideaSyncTask {
+		finalizedBy(generateDataGenerationDir)
+	}
+
+	"runDataGeneration" {
+		dependsOn(generateDataGenerationDir)
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = 'UTF-8'
-	// Minecraft 1.20.5 (24w14a) upwards uses Java 21.
-	it.options.release = 21
+tasks.register(generateDataGenerationDir) {
+	inputs.dir dataGenerationDir
+
+	doFirst {
+		for (file in inputs.files) file.mkdirs()
+	}
 }
 
 java {
@@ -78,13 +148,6 @@ java {
 	// If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
 	// Uncomment this line to generate them.
 	// withJavadocJar()
-}
-
-// If you plan to use a different file for the license, don't forget to change the file name here!
-jar {
-	from('LICENSE') {
-		rename { "${it}_${base.archivesName.get()}" }
-	}
 }
 
 // Configure the maven publication
