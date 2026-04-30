@@ -19,22 +19,29 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "com.example.example_mod.ExampleMod"
+			"main": "com.example.ExampleMod",
+			"client": "com.example.client.ExampleModClient"
 		},
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"versions": ">=0.19.1"
+				"versions": ">=0.30.0-beta.7"
 			},
 			{
-				"id": "quilted_fabric_api",
-				"versions": ">=7.0.2"
+				"id": "fabric-api",
+				"versions": "*"
 			},
 			{
 				"id": "minecraft",
-				"versions": ">=1.20"
+				"versions": ">=26.1.2"
 			}
 		]
 	},
-	"mixin": "example_mod.mixins.json"
+	"mixin": [
+		"example_mod.mixins.json",
+		{
+			"config": "example_mod.client.mixins.json",
+			"environment": "client"
+		}
+	]
 }
