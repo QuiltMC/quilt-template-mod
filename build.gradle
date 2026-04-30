@@ -19,12 +19,15 @@ repositories {
 }
 
 loom {
+	splitEnvironmentSourceSets()
+
 	// Loom and Loader both use this block in order to gather more information about your mod.
 	mods {
 		// This should match your mod id.
 		"example_mod" {
 			// Tell Loom about each source set used by your mod here. This ensures that your mod's classes are properly transformed by Loader.
 			sourceSet("main")
+			sourceSet("client")
 			// If you shade (directly include classes, not JiJ) a dependency into your mod, include it here using one of these methods:
 			// dependency("com.example.shadowedmod:1.2.3")
 			// configuration("exampleShadedConfigurationName")
@@ -36,20 +39,9 @@ loom {
 // See https://docs.gradle.org/current/userguide/platforms.html for information on how version catalogs work.
 dependencies {
 	minecraft libs.minecraft
-	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
-	// Replace the above line with the block below if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
-	/*
-	mappings loom.layered {
-		mappings "org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2"
-		officialMojangMappings()
-	}
-	*/
-	modImplementation libs.quilt.loader
+	implementation libs.quilt.loader
 
-	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
-	// Quilted Fabric API will automatically pull in the correct QSL version.
-	modImplementation libs.bundles.quilted.fabric.api
-	// modImplementation libs.bundles.quilted.fabric.api.deprecated // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
+	implementation libs.fabric.api
 }
 
 processResources {
@@ -62,14 +54,12 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = 'UTF-8'
-	// Minecraft 1.20.5 (24w14a) upwards uses Java 21.
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
-	// Still required by IDEs such as Eclipse and Visual Studio Code
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
 	// If you remove this line, sources will not be generated.
@@ -77,7 +67,7 @@ java {
 
 	// If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
 	// Uncomment this line to generate them.
-	// withJavadocJar()
+	withJavadocJar()
 }
 
 // If you plan to use a different file for the license, don't forget to change the file name here!
